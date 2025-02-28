@@ -1,7 +1,8 @@
-# Download all the files in this folder.
-# Install Python
-# Run in Windows Command Prompt: pip install pygame
-# Run in Windows Command Prompt: pip install pillow
-# In the game Download Folder right click on Turdy_Birdy.py and run with Python.
+# Create a new folder on your desktop named Turdy_Birdy.
+# Download all the files in this repository to that folder. 
+# Install Python from the Windows Store.
+# Run in Windows Command Prompt: pip install pygame && pip install pillow
+# Run in Windows Command Prompt: cd desktop && cd Turdy_Birdy && python turdy_birdy.py
+# To play the game simply press the key "X" to launch Turdys.
 # Now try to find all the Easter Eggs!
 # Parzival 🤣✌🗝🗝🗝🥚
