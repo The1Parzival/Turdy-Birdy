@@ -8,10 +8,11 @@ import time
 pygame.init()
 pygame.mixer.init()
 
-# Screen settings with V-Sync enabled
-WIDTH = 1728
-HEIGHT = 960
-screen = pygame.display.set_mode((WIDTH, HEIGHT), pygame.SCALED, vsync=1)
+# Get screen info for dynamic scaling
+screen_info = pygame.display.Info()
+WIDTH = screen_info.current_w
+HEIGHT = screen_info.current_h
+screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN, vsync=1)
 
 # Colors
 WHITE = (255, 255, 255)
@@ -19,23 +20,26 @@ BLACK = (0, 0, 0)
 BROWN = (139, 69, 19)
 RED = (255, 0, 0)
 
-# Load images
+# Scale factor based on original 1728x960 resolution
+scale_factor = min(WIDTH / 1728, HEIGHT / 960)
+
+# Load and scale images
 birdy_image = pygame.image.load("birdy.png").convert_alpha()
-birdy_image = pygame.transform.scale(birdy_image, (150, 100))
+birdy_image = pygame.transform.scale(birdy_image, (int(150 * scale_factor), int(100 * scale_factor)))
 birdy_image_flipped = pygame.transform.flip(birdy_image, True, False)
 
 turdy_image = pygame.image.load("turdy.png").convert_alpha()
-turdy_image = pygame.transform.scale(turdy_image, (30, 30))
-big_turdy_image = pygame.transform.scale(turdy_image, (100, 100))
-turdy_image_special = pygame.transform.scale(turdy_image, (15, 15))
-big_turdy_image_special = pygame.transform.scale(turdy_image, (50, 50))
+turdy_image = pygame.transform.scale(turdy_image, (int(30 * scale_factor), int(30 * scale_factor)))
+big_turdy_image = pygame.transform.scale(turdy_image, (int(100 * scale_factor), int(100 * scale_factor)))
+turdy_image_special = pygame.transform.scale(turdy_image, (int(15 * scale_factor), int(15 * scale_factor)))
+big_turdy_image_special = pygame.transform.scale(turdy_image, (int(50 * scale_factor), int(50 * scale_factor)))
 
 elon_birdy_image = pygame.image.load("elon_birdy.png").convert_alpha()
-elon_birdy_image = pygame.transform.scale(elon_birdy_image, (150, 150))
+elon_birdy_image = pygame.transform.scale(elon_birdy_image, (int(150 * scale_factor), int(150 * scale_factor)))
 elon_birdy_image_flipped = pygame.transform.flip(elon_birdy_image, True, False)
 
 parzival_birdy_image = pygame.image.load("parzival_birdy.png").convert_alpha()
-parzival_birdy_image = pygame.transform.scale(parzival_birdy_image, (150, 150))
+parzival_birdy_image = pygame.transform.scale(parzival_birdy_image, (int(150 * scale_factor), int(150 * scale_factor)))
 parzival_birdy_image_flipped = pygame.transform.flip(parzival_birdy_image, True, False)
 
 intro_image = pygame.image.load("intro.png").convert()
@@ -47,15 +51,15 @@ elon_images_special = []
 elon_hit_images_special = []
 for i in range(1, 21):
     img = pygame.image.load(f"elon{i}.png").convert_alpha()
-    img = pygame.transform.scale(img, (75, 120))
+    img = pygame.transform.scale(img, (int(75 * scale_factor), int(120 * scale_factor)))
     elon_images.append(img)
-    img_special = pygame.transform.scale(img, (37, 60))
+    img_special = pygame.transform.scale(img, (int(37 * scale_factor), int(60 * scale_factor)))
     elon_images_special.append(img_special)
     
     hit_img = pygame.image.load(f"elon_hit{i}.png").convert_alpha()
-    hit_img = pygame.transform.scale(hit_img, (200, 200))
+    hit_img = pygame.transform.scale(hit_img, (int(200 * scale_factor), int(200 * scale_factor)))
     elon_hit_images.append(hit_img)
-    hit_img_special = pygame.transform.scale(hit_img, (100, 100))
+    hit_img_special = pygame.transform.scale(hit_img, (int(100 * scale_factor), int(100 * scale_factor)))
     elon_hit_images_special.append(hit_img_special)
 
 win_no_cheat_gif = Image.open("win_no_cheat.gif")
@@ -137,25 +141,25 @@ winner_music = pygame.mixer.Sound("winner_music.mp3")
 winner_music_special = pygame.mixer.Sound("winner_music_special.mp3")
 
 barricade_image = pygame.image.load("barricade.png").convert_alpha()
-barricade_image = pygame.transform.scale(barricade_image, (150, 150))
+barricade_image = pygame.transform.scale(barricade_image, (int(150 * scale_factor), int(150 * scale_factor)))
 
 barricade_hit_images = []
 for i in range(1, 21):
     hit_img = pygame.image.load(f"barricade_hit{i}.png").convert_alpha()
-    hit_img = pygame.transform.scale(hit_img, (200, 200))
+    hit_img = pygame.transform.scale(hit_img, (int(200 * scale_factor), int(200 * scale_factor)))
     barricade_hit_images.append(hit_img)
 
 cheat_idkfa_image = pygame.image.load("cheat_idkfa.png").convert_alpha()
-cheat_idkfa_image = pygame.transform.scale(cheat_idkfa_image, (600, 600))
+cheat_idkfa_image = pygame.transform.scale(cheat_idkfa_image, (int(600 * scale_factor), int(600 * scale_factor)))
 
 cheat_iddqd_image = pygame.image.load("cheat_iddqd.png").convert_alpha()
-cheat_iddqd_image = pygame.transform.scale(cheat_iddqd_image, (600, 600))
+cheat_iddqd_image = pygame.transform.scale(cheat_iddqd_image, (int(600 * scale_factor), int(600 * scale_factor)))
 
 cheat_both_image = pygame.image.load("cheat_both.png").convert_alpha()
-cheat_both_image = pygame.transform.scale(cheat_both_image, (600, 600))
+cheat_both_image = pygame.transform.scale(cheat_both_image, (int(600 * scale_factor), int(600 * scale_factor)))
 
 cheat_parzival_image = pygame.image.load("cheat_parzival.png").convert_alpha()
-cheat_parzival_image = pygame.transform.scale(cheat_parzival_image, (1200, 450))
+cheat_parzival_image = pygame.transform.scale(cheat_parzival_image, (int(1200 * scale_factor), int(450 * scale_factor)))
 
 turdy_fire_sound = pygame.mixer.Sound("turdy_fire.mp3")
 elon_hit_sound = pygame.mixer.Sound("elon_hit.mp3")
@@ -198,7 +202,7 @@ current_big_turdy_image = big_turdy_image
 clock = pygame.time.Clock()
 
 birdy_x = WIDTH // 2 - birdy_image.get_width() // 2
-birdy_y = 50
+birdy_y = int(50 * scale_factor)
 birdy_speed = 5
 birdy_direction = 1
 birdy_width = birdy_image.get_width()
@@ -206,7 +210,7 @@ birdy_height = birdy_image.get_height()
 current_birdy_image = birdy_image
 
 elon_x = WIDTH // 2 - elon_images[0].get_width() // 2
-elon_y = HEIGHT - elon_images[0].get_height() - 20
+elon_y = HEIGHT - elon_images[0].get_height() - int(20 * scale_factor)
 elon_width = elon_images[0].get_width()
 elon_height = elon_images[0].get_height()
 elon_speed = 0
@@ -215,7 +219,7 @@ elon_hit_timer = 0
 elon_hit_x = 0
 
 barricade_x = WIDTH // 2 - barricade_image.get_width() // 2
-barricade_y = elon_y - 150
+barricade_y = elon_y - int(150 * scale_factor)
 barricade_speed = 0
 barricade_direction = 1
 barricade_width = barricade_image.get_width()
@@ -229,19 +233,19 @@ turdy_rotation_speed = 10
 turdy_spawn_timer = 0
 TURDY_SPAWN_COOLDOWN = 0.066
 
-big_turdy_x = -100
-big_turdy_y = -100
+big_turdy_x = -int(100 * scale_factor)
+big_turdy_y = -int(100 * scale_factor)
 big_turdy_speed = -15
 big_turdy_active = False
 big_turdy_width = big_turdy_image.get_width()
 big_turdy_height = big_turdy_image.get_height()
 big_turdy_angle = 0
 
-font = pygame.font.Font(None, 36)
-win_font = pygame.font.Font(None, 144)
-level_font = pygame.font.Font(None, 288)
-special_font = pygame.font.Font(None, 200)
-flawless_font = pygame.font.Font(None, 144)
+font = pygame.font.Font(None, int(36 * scale_factor))
+win_font = pygame.font.Font(None, int(144 * scale_factor))
+level_font = pygame.font.Font(None, int(288 * scale_factor))
+special_font = pygame.font.Font(None, int(200 * scale_factor))
+flawless_font = pygame.font.Font(None, int(144 * scale_factor))
 
 screen.blit(intro_image, (0, 0))
 pygame.display.flip()
@@ -279,7 +283,7 @@ def reset_game(new_level, special=False):
         if flawless:
             flawless_text = flawless_font.render("Flawless Victory", True, RED)
             flawless_x = WIDTH // 2 - flawless_text.get_width() // 2
-            flawless_y = HEIGHT // 2 - level_text.get_height() // 2 - flawless_text.get_height() - 20
+            flawless_y = HEIGHT // 2 - level_text.get_height() // 2 - flawless_text.get_height() - int(20 * scale_factor)
             screen.blit(flawless_text, (flawless_x, flawless_y))
         screen.blit(level_text, (text_x, text_y))
         pygame.display.flip()
@@ -298,36 +302,36 @@ def reset_game(new_level, special=False):
 
     if level == 1 or special_mode:
         birdy_x = WIDTH // 2 - birdy_width // 2
-        birdy_y = 50
+        birdy_y = int(50 * scale_factor)
         birdy_direction = 1
-        elon_x = WIDTH // 2 - (37 if special_mode and elon_images_special[0] else elon_width) // 2
-        elon_y = HEIGHT - (60 if special_mode and elon_images_special[0] else elon_height) - 20
+        elon_x = WIDTH // 2 - (int(37 * scale_factor) if special_mode else elon_width) // 2
+        elon_y = HEIGHT - (int(60 * scale_factor) if special_mode else elon_height) - int(20 * scale_factor)
         barricade_x = WIDTH // 2 - barricade_width // 2
         barricade_y = elon_y - barricade_height
     elif level == 2:
-        birdy_x = 20
+        birdy_x = int(20 * scale_factor)
         birdy_y = HEIGHT // 2 - birdy_height // 2
         birdy_direction = 1
-        elon_x = WIDTH - elon_width - 20
+        elon_x = WIDTH - elon_width - int(20 * scale_factor)
         elon_y = HEIGHT // 2 - elon_height // 2
-        barricade_x = elon_x - barricade_width - 10
+        barricade_x = elon_x - barricade_width - int(10 * scale_factor)
         barricade_y = HEIGHT // 2 - barricade_height // 2
     elif level == 3:
-        birdy_x = WIDTH - birdy_width - 20
+        birdy_x = WIDTH - birdy_width - int(20 * scale_factor)
         birdy_y = HEIGHT // 2 - birdy_height // 2
         birdy_direction = 1
-        elon_x = 20
+        elon_x = int(20 * scale_factor)
         elon_y = HEIGHT // 2 - elon_height // 2
-        barricade_x = elon_x + elon_width + 10
+        barricade_x = elon_x + elon_width + int(10 * scale_factor)
         barricade_y = HEIGHT // 2 - barricade_height // 2
     elif level == 4:
         birdy_x = WIDTH // 2 - birdy_width // 2
-        birdy_y = HEIGHT - birdy_height - 50
+        birdy_y = HEIGHT - birdy_height - int(50 * scale_factor)
         birdy_direction = 1
         elon_x = WIDTH // 2 - elon_width // 2
-        elon_y = 20
+        elon_y = int(20 * scale_factor)
         barricade_x = WIDTH // 2 - barricade_width // 2
-        barricade_y = elon_y + elon_height + 10
+        barricade_y = elon_y + elon_height + int(10 * scale_factor)
 
     birdy_speed = 5
     elon_speed = 0
@@ -339,8 +343,8 @@ def reset_game(new_level, special=False):
     barricade_hit_timer = 0
     barricade_hit_x = 0
     turdies = []
-    big_turdy_x = -100
-    big_turdy_y = -100
+    big_turdy_x = -int(100 * scale_factor)
+    big_turdy_y = -int(100 * scale_factor)
     big_turdy_active = False
     consecutive_hits = 0
     turdy_spawn_timer = 0
@@ -400,6 +404,10 @@ while running:
         if event.type == pygame.QUIT:
             running = False
         if event.type == pygame.KEYDOWN:
+            # Add ESC key to quit the game
+            if event.key == pygame.K_ESCAPE:
+                running = False
+            
             if event.key in [pygame.K_i, pygame.K_d, pygame.K_k, pygame.K_f, pygame.K_a, pygame.K_q, pygame.K_p, pygame.K_r, pygame.K_z, pygame.K_v, pygame.K_l, pygame.K_h, pygame.K_1, pygame.K_2, pygame.K_3, pygame.K_4, pygame.K_y]:
                 cheat_sequence += chr(event.key).lower()
                 if "idkfa" in cheat_sequence:
@@ -647,28 +655,28 @@ while running:
                     elon_height = current_elon_images[min(score, 19)].get_height()
                     if level == 1 or special_mode:
                         elon_x = max(0, min(elon_x, WIDTH - elon_width))
-                        elon_y = HEIGHT - elon_height - 20
+                        elon_y = HEIGHT - elon_height - int(20 * scale_factor)
                         barricade_y = elon_y - barricade_height
                     elif level == 2:
-                        elon_x = WIDTH - elon_width - 20
+                        elon_x = WIDTH - elon_width - int(20 * scale_factor)
                         elon_y = max(0, min(elon_y, HEIGHT - elon_height))
-                        barricade_x = elon_x - barricade_width - 10
+                        barricade_x = elon_x - barricade_width - int(10 * scale_factor)
                     elif level == 3:
-                        elon_x = 20
+                        elon_x = int(20 * scale_factor)
                         elon_y = max(0, min(elon_y, HEIGHT - elon_height))
-                        barricade_x = elon_x + elon_width + 10
+                        barricade_x = elon_x + elon_width + int(10 * scale_factor)
                     elif level == 4:
                         elon_x = max(0, min(elon_x, WIDTH - elon_width))
-                        elon_y = 20
-                        barricade_y = elon_y + elon_height + 10
+                        elon_y = int(20 * scale_factor)
+                        barricade_y = elon_y + elon_height + int(10 * scale_factor)
                     elon_hit_timer = 1.0
                     hit_width = current_elon_hit_images[min(score-1, 19)].get_width()
                     hit_height = current_elon_hit_images[min(score-1, 19)].get_height()
                     if level in [1, 4] or special_mode:
-                        elon_hit_x = elon_x + elon_width + 10 if elon_direction < 0 else elon_x - hit_width - 10
+                        elon_hit_x = elon_x + elon_width + int(10 * scale_factor) if elon_direction < 0 else elon_x - hit_width - int(10 * scale_factor)
                         elon_hit_x = max(0, min(elon_hit_x, WIDTH - hit_width))
                     elif level in [2, 3]:
-                        elon_hit_y = elon_y + elon_height + 10 if elon_direction < 0 else elon_y - hit_height - 10
+                        elon_hit_y = elon_y + elon_height + int(10 * scale_factor) if elon_direction < 0 else elon_y - hit_height - int(10 * scale_factor)
                         elon_hit_x = elon_x + (elon_width - hit_width) // 2
                         elon_hit_x = max(0, min(elon_hit_x, WIDTH - hit_width))
                         elon_hit_y = max(0, min(elon_hit_y, HEIGHT - hit_height))
@@ -695,23 +703,22 @@ while running:
                             elon_height = current_elon_images[min(score, 19)].get_height()
                             if level == 1 or special_mode:
                                 elon_x = max(0, min(elon_x, WIDTH - elon_width))
-                                elon_y = HEIGHT - elon_height - 20
+                                elon_y = HEIGHT - elon_height - int(20 * scale_factor)
                                 barricade_y = elon_y - barricade_height
                             elif level == 2:
-                                elon_x = WIDTH - elon_width - 20
+                                elon_x = WIDTH - elon_width - int(20 * scale_factor)
                                 elon_y = max(0, min(elon_y, HEIGHT - elon_height))
-                                barricade_x = elon_x - barricade_width - 10
+                                barricade_x = elon_x - barricade_width - int(10 * scale_factor)
                             elif level == 3:
-                                elon_x = 20
+                                elon_x = int(20 * scale_factor)
                                 elon_y = max(0, min(elon_y, HEIGHT - elon_height))
-                                barricade_x = elon_x + elon_width + 10
+                                barricade_x = elon_x + elon_width + int(10 * scale_factor)
                             elif level == 4:
                                 elon_x = max(0, min(elon_x, WIDTH - elon_width))
-                                elon_y = 20
-                                barricade_y = elon_y + elon_height + 10
+                                elon_y = int(20 * scale_factor)
+                                barricade_y = elon_y + elon_height + int(10 * scale_factor)
 
-                elif (score >= 5 and 
-                      turdy_rect.colliderect(pygame.Rect(barricade_x, barricade_y, barricade_width, barricade_height))):
+                elif score >= 5 and turdy_rect.colliderect(pygame.Rect(barricade_x, barricade_y, barricade_width, barricade_height)):
                     turdy[3] = False
                     miss_count += 1
                     level_misses += 1
@@ -721,10 +728,10 @@ while running:
                     hit_width = barricade_hit_images[min(score-1, 19)].get_width()
                     hit_height = barricade_hit_images[min(score-1, 19)].get_height()
                     if level in [1, 4] or special_mode:
-                        barricade_hit_x = barricade_x + barricade_width + 10 if barricade_direction < 0 else barricade_x - hit_width - 10
+                        barricade_hit_x = barricade_x + barricade_width + int(10 * scale_factor) if barricade_direction < 0 else barricade_x - hit_width - int(10 * scale_factor)
                         barricade_hit_x = max(0, min(barricade_hit_x, WIDTH - hit_width))
                     elif level in [2, 3]:
-                        barricade_hit_y = barricade_y + barricade_height + 10 if barricade_direction < 0 else barricade_y - hit_height - 10
+                        barricade_hit_y = barricade_y + barricade_height + int(10 * scale_factor) if barricade_direction < 0 else barricade_y - hit_height - int(10 * scale_factor)
                         barricade_hit_x = barricade_x + (barricade_width - hit_width) // 2
                         barricade_hit_x = max(0, min(barricade_hit_x, WIDTH - hit_width))
                         barricade_hit_y = max(0, min(barricade_hit_y, HEIGHT - hit_height))
@@ -741,20 +748,20 @@ while running:
                             elon_height = current_elon_images[min(score, 19)].get_height()
                             if level == 1 or special_mode:
                                 elon_x = max(0, min(elon_x, WIDTH - elon_width))
-                                elon_y = HEIGHT - elon_height - 20
+                                elon_y = HEIGHT - elon_height - int(20 * scale_factor)
                                 barricade_y = elon_y - barricade_height
                             elif level == 2:
-                                elon_x = WIDTH - elon_width - 20
+                                elon_x = WIDTH - elon_width - int(20 * scale_factor)
                                 elon_y = max(0, min(elon_y, HEIGHT - elon_height))
-                                barricade_x = elon_x - barricade_width - 10
+                                barricade_x = elon_x - barricade_width - int(10 * scale_factor)
                             elif level == 3:
-                                elon_x = 20
+                                elon_x = int(20 * scale_factor)
                                 elon_y = max(0, min(elon_y, HEIGHT - elon_height))
-                                barricade_x = elon_x + elon_width + 10
+                                barricade_x = elon_x + elon_width + int(10 * scale_factor)
                             elif level == 4:
                                 elon_x = max(0, min(elon_x, WIDTH - elon_width))
-                                elon_y = 20
-                                barricade_y = elon_y + elon_height + 10
+                                elon_y = int(20 * scale_factor)
+                                barricade_y = elon_y + elon_height + int(10 * scale_factor)
 
         if big_turdy_active:
             if level == 1 or special_mode:
@@ -785,20 +792,20 @@ while running:
                 elon_height = current_elon_images[min(score, 19)].get_height()
                 if level == 1 or special_mode:
                     elon_x = max(0, min(elon_x, WIDTH - elon_width))
-                    elon_y = HEIGHT - elon_height - 20
+                    elon_y = HEIGHT - elon_height - int(20 * scale_factor)
                     barricade_y = elon_y - barricade_height
                 elif level == 2:
-                    elon_x = WIDTH - elon_width - 20
+                    elon_x = WIDTH - elon_width - int(20 * scale_factor)
                     elon_y = max(0, min(elon_y, HEIGHT - elon_height))
-                    barricade_x = elon_x - barricade_width - 10
+                    barricade_x = elon_x - barricade_width - int(10 * scale_factor)
                 elif level == 3:
-                    elon_x = 20
+                    elon_x = int(20 * scale_factor)
                     elon_y = max(0, min(elon_y, HEIGHT - elon_height))
-                    barricade_x = elon_x + elon_width + 10
+                    barricade_x = elon_x + elon_width + int(10 * scale_factor)
                 elif level == 4:
                     elon_x = max(0, min(elon_x, WIDTH - elon_width))
-                    elon_y = 20
-                    barricade_y = elon_y + elon_height + 10
+                    elon_y = int(20 * scale_factor)
+                    barricade_y = elon_y + elon_height + int(10 * scale_factor)
             elif invincible and big_turdy_rect.colliderect(pygame.Rect(birdy_x, birdy_y, birdy_width, birdy_height)):
                 big_turdy_active = False
             
@@ -864,12 +871,12 @@ while running:
             screen.blit(rotated_big_turdy, big_turdy_rect.topleft)
         
         score_text = font.render(f"Special Level  Stage: {stage}" if special_mode else f"Level: {level}  Stage: {stage}", True, RED if special_mode else BLACK)
-        screen.blit(score_text, (10, 10))
+        screen.blit(score_text, (int(10 * scale_factor), int(10 * scale_factor)))
         
         text_width = score_text.get_width()
-        turdy_x = 10 + text_width + 10
+        turdy_x = int(10 * scale_factor) + text_width + int(10 * scale_factor)
         for i in range(turdy_lives):
-            screen.blit(turdy_image, (turdy_x + i * 40, 10))
+            screen.blit(turdy_image, (turdy_x + i * int(40 * scale_factor), int(10 * scale_factor)))
 
         if cheat_timer > 0:
             if parzival_mode:
@@ -914,7 +921,7 @@ while running:
         
         win_text = win_font.render("Thanks for playing my game!", True, RED)
         text_x = WIDTH // 2 - win_text.get_width() // 2
-        text_y = HEIGHT - win_text.get_height() - 20
+        text_y = HEIGHT - win_text.get_height() - int(20 * scale_factor)
         screen.blit(win_text, (text_x, text_y))
 
     if special_win:
@@ -923,7 +930,7 @@ while running:
         
         win_text = win_font.render("Thanks for playing my game!", True, RED)
         text_x = WIDTH // 2 - win_text.get_width() // 2
-        text_y = HEIGHT - win_text.get_height() - 20
+        text_y = HEIGHT - win_text.get_height() - int(20 * scale_factor)
         screen.blit(win_text, (text_x, text_y))
 
     pygame.display.flip()
